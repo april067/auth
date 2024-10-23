@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const booksRouter = require('./routes/api/books');
 const contactsRouter = require('./routes/api/contacts');
+const authRouter = require('./routes/api/auth');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(async (req, _, next) => {
 
 app.use('/api/books', booksRouter);
 app.use('/api/contacts', contactsRouter);
+app.use('/api/auth', authRouter);
 
 app.use((_, res) => {
 	res.status(404).json({

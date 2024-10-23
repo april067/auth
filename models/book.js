@@ -26,6 +26,10 @@ const bookSchema = new Schema(
 			match: getConstants.dateRegexp, //matches only a regular expression
 			required: true,
 		},
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: 'user',
+		},
 	},
 	{ versionKey: false }
 );
