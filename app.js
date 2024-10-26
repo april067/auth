@@ -34,6 +34,7 @@ app.use((_, res) => {
 
 app.use((err, req, res, next) => {
 	const { status = 500, message = 'Server error' } = err;
+	// console.log('SECRET_KEY');
 	res.status(status).json({ message });
 });
 

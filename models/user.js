@@ -23,7 +23,7 @@ const userSchema = new Schema(
 			enum: getConstants.subscriptionList,
 			default: getConstants.subscriptionList[0],
 		},
-		// token: String,
+		token: String,
 	},
 	{ versionKey: false }
 );

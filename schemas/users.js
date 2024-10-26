@@ -7,9 +7,14 @@ const registerJoiSchema = Joi.object({
 	email: Joi.string().pattern(getConstants.emailRegexp).required(),
 	password: Joi.string().min(8).max(16).required(),
 	subscription: Joi.string().valid(...getConstants.subscriptionList),
-	// token: Joi.string(),
+});
+
+const loginJoiSchema = Joi.object({
+	email: Joi.string().pattern(getConstants.emailRegexp).required(),
+	password: Joi.string().min(8).max(16).required(),
 });
 
 module.exports = {
 	registerJoiSchema,
+	loginJoiSchema,
 };

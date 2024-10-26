@@ -20,7 +20,6 @@ const getBook = async (req, res) => {
 };
 
 const addBook = async (req, res) => {
-	console.log(req.body);
 	const newBook = await Book.create(req.body);
 
 	res.status(201).json(newBook);
