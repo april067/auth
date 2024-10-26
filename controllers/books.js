@@ -1,8 +1,15 @@
 const { Book } = require('../models');
 const { HttpError } = require('../helpers');
 
-const getAllBooks = async (_, res) => {
-	const books = await Book.find({});
+const getAllBooks = async (req, res) => {
+	const { _id: owner } = req.user;
+	const { page = 1, limit = 10 } = req.query;
+	console.log(req.query);
+	const skip = (page - 1) * limit;
+	const books = await Book.find({ owner }, '', { skip, limit }).populate(
+		'owner',
+		'name email subscription'
+	);
 
 	res.json(books);
 };
@@ -11,7 +18,7 @@ const getBook = async (req, res) => {
 	const { id } = req.params;
 
 	// const book = await Book.findOne({_id: id})
-	const book = await Book.findById(id);
+	const book = await Book.findById(id).populate('owner', 'name email subscription');
 	if (!book) {
 		throw HttpError(404, 'Not found');
 	}
@@ -20,7 +27,8 @@ const getBook = async (req, res) => {
 };
 
 const addBook = async (req, res) => {
-	const newBook = await Book.create(req.body);
+	const { _id: owner } = req.user;
+	const newBook = await Book.create({ ...req.body, owner });
 
 	res.status(201).json(newBook);
 };
