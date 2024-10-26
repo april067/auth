@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { SECRET_KEY } = process.env;
 
-const { ctrlWrapper, HttpError } = require('../helpers');
+const { HttpError } = require('../helpers');
+const { ctrlWrapper } = require('../middlewares');
 const { User } = require('../models');
 const saltRounds = 10;
 
@@ -62,10 +63,31 @@ const login = async (req, res) => {
 	});
 };
 
-const logout = async (req, res) => {};
+const current = async (req, res) => {
+	const { id, name, email, subscription } = req.user;
+
+	res.json({
+		currentUser: {
+			id,
+			name,
+			email,
+			subscription,
+		},
+	});
+};
+
+const logout = async (req, res) => {
+	const { id } = req.user;
+	await User.findByIdAndUpdate(id, { token: '' });
+
+	res.json({
+		message: 'Logout successful',
+	});
+};
 
 module.exports = {
 	register: ctrlWrapper(register),
 	login: ctrlWrapper(login),
+	current: ctrlWrapper(current),
 	logout: ctrlWrapper(logout),
 };

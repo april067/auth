@@ -39,7 +39,10 @@ const updateBook = async (req, res) => {
 	if (Object.keys(data).length === 0)
 		res.status(400).json({ message: 'Request body must have at least one field' });
 
-	const updatedBook = await Book.findByIdAndUpdate(id, data, { new: true });
+	const updatedBook = await Book.findByIdAndUpdate(id, data, { new: true }).populate(
+		'owner',
+		'name email subscription'
+	);
 	if (!updatedBook) {
 		throw HttpError(404, 'Not found');
 	}
@@ -64,7 +67,10 @@ const updateFavorite = async (req, res) => {
 	const { id } = req.params;
 	const data = req.body;
 
-	const updatedBook = await Book.findByIdAndUpdate(id, data, { new: true });
+	const updatedBook = await Book.findByIdAndUpdate(id, data, { new: true }).populate(
+		'owner',
+		'name email subscription'
+	);
 	if (!updatedBook) {
 		throw HttpError(404, 'Not found');
 	}

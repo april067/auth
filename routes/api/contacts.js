@@ -2,8 +2,7 @@ const express = require('express');
 
 const { contactsControllers } = require('../../controllers');
 const { contactsSchema } = require('../../schemas');
-const { validateBody, ctrlWrapper, isValidId } = require('../../helpers');
-const { authenticate } = require('../../middlewares');
+const { authenticate, validateBody, ctrlWrapper, isValidId } = require('../../middlewares');
 
 const router = express.Router();
 
