@@ -7,6 +7,7 @@ const { authenticate, validateBody, isValidId, ctrlWrapper } = require('../../mi
 const router = express.Router();
 
 router.get('/', authenticate, ctrlWrapper(booksControllers.getAllBooks));
+
 router.get('/:id', authenticate, isValidId, ctrlWrapper(booksControllers.getBook));
 router.post(
 	'/',
@@ -14,6 +15,7 @@ router.post(
 	validateBody(booksSchema.bookAdd),
 	ctrlWrapper(booksControllers.addBook)
 );
+
 router.put(
 	'/:id',
 	authenticate,
@@ -21,7 +23,9 @@ router.put(
 	validateBody(booksSchema.bookUpdate),
 	ctrlWrapper(booksControllers.updateBook)
 );
-router.delete('/:id', isValidId, ctrlWrapper(booksControllers.removeBook));
+
+router.delete('/:id', authenticate, isValidId, ctrlWrapper(booksControllers.removeBook));
+
 router.patch(
 	'/:id/favorite',
 	isValidId,

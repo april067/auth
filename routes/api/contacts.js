@@ -7,13 +7,16 @@ const { authenticate, validateBody, ctrlWrapper, isValidId } = require('../../mi
 const router = express.Router();
 
 router.get('/', authenticate, ctrlWrapper(contactsControllers.getAllContacts));
+
 router.get('/:id', authenticate, isValidId, ctrlWrapper(contactsControllers.getContact));
+
 router.post(
 	'/',
 	authenticate,
 	validateBody(contactsSchema.contactAdd),
 	ctrlWrapper(contactsControllers.addContact)
 );
+
 router.put(
 	'/:id',
 	authenticate,

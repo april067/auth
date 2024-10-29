@@ -4,7 +4,6 @@ const { HttpError } = require('../helpers');
 const getAllBooks = async (req, res) => {
 	const { _id: owner } = req.user;
 	const { page = 1, limit = 10 } = req.query;
-	console.log(req.query);
 	const skip = (page - 1) * limit;
 	const books = await Book.find({ owner }, '', { skip, limit }).populate(
 		'owner',
